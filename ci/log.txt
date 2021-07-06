@@ -1,2 +1,2 @@
-FILE START
-
+   text	   data	    bss	    dec	    hex	filename
+  64680	  41304	  24888	 130872	  1ff38	/opt/tflite-micro/tensorflow/lite/micro/tools/make/gen/xtensa_fusion_f1_release/bin/keyword_benchmark
