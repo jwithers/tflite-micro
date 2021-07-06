@@ -1,5 +1,7 @@
 #!/bin/bash -x
 
+cd /opt/tflite-micro
+
 make -f /opt/tflite-micro/tensorflow/lite/micro/tools/make/Makefile clean
 make -f /opt/tflite-micro/tensorflow/lite/micro/tools/make/Makefile third_party_downloads
 
