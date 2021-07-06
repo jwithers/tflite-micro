@@ -1,0 +1,29 @@
+# use xtensa tools to do a size check on the binaries
+# works on the main branch by dispatch
+# this is a prototyping ephemeral file and not for production
+
+name: size-proto
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  size_test:
+    runs-on: ubuntu-latest
+
+    name: git some
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          echo ${{ secrets.TFLM_BOT_PACKAGE_READ_TOKEN }} | docker login ghcr.io -u tflm-bot --password-stdin
+          docker run --rm -v `pwd`:/opt/tflite-micro ghcr.io/tflm-bot/xtensa:latest /opt/tflite-micro/tensorflow/ci/test_size.sh
+      - run: cat /opt/tflite-micro/tensorflow/ci/log.txt
+      - name: commit ci info file
+        run: |
+          git config --local user.email "$(git log --format='%ae' HEAD^!)"
+          git config --local user.name "$(git log --format='%an' HEAD^!)"
+          git remote add github "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
+          git pull github ${GITHUB_REF}
+          git add .
+          git commit -m "adding ci data"
+          git push --force github HEAD:${GITHUB_HEAD_REF}
