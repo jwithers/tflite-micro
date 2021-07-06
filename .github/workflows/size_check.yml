@@ -17,6 +17,7 @@ jobs:
       - run: |
           echo ${{ secrets.TFLM_BOT_PACKAGE_READ_TOKEN }} | docker login ghcr.io -u tflm-bot --password-stdin
           docker run --rm -v `pwd`:/opt/tflite-micro ghcr.io/tflm-bot/xtensa:latest /opt/tflite-micro/ci/test_size.sh
+          cat /opt/tflite-micro/ci/log.txt
       - run: cat /opt/tflite-micro/ci/log.txt
       - name: commit ci info file
         run: |
