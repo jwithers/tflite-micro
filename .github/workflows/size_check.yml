@@ -26,4 +26,4 @@ jobs:
           git pull github ${GITHUB_REF}
           git add .
           git commit -m "adding ci data"
-          git push --force github HEAD:${GITHUB_HEAD_REF}
+          git push --force github HEAD
