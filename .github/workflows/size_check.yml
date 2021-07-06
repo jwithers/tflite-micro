@@ -15,9 +15,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          ls -alh
-          # echo ${{ secrets.TFLM_BOT_PACKAGE_READ_TOKEN }} | docker login ghcr.io -u tflm-bot --password-stdin
-          # docker run --rm -v `pwd`:/opt/tflite-micro ghcr.io/tflm-bot/xtensa:latest /opt/tflite-micro/tensorflow/ci/test_size.sh
+          echo ${{ secrets.TFLM_BOT_PACKAGE_READ_TOKEN }} | docker login ghcr.io -u tflm-bot --password-stdin
+          docker run --rm -v `pwd`:/opt/tflite-micro ghcr.io/tflm-bot/xtensa:latest /opt/tflite-micro/ci/test_size.sh
       - run: cat /opt/tflite-micro/tensorflow/ci/log.txt
       - name: commit ci info file
         run: |
