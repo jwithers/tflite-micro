@@ -37,5 +37,5 @@ jobs:
           echo "third check"
           ls .ci_vars
           git add .ci_vars/*
-          git commit -m "adding ci data"
+          git commit --allow-empty  -m "updating ci data"
           git push --force github HEAD
