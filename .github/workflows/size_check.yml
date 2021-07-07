@@ -27,7 +27,7 @@ jobs:
 
       - name: compare bss value and commit
         run: |
-          ci/size_comp.py .ci_vars/fusion_f1.json ci/log.txt
+          ci/size_comp.py -c .ci_vars/fusion_f1.json ci/log.txt
           rm .ci_vars/fusion_f1.json
           ci/size_comp.py -t ci/log.txt .ci_vars/fusion_f1.json
           
