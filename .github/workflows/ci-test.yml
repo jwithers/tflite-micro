@@ -6,7 +6,7 @@ on:
 jobs:
   trivial:
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.labels.*.name, 'ci:test')
+    if: contains(github.event.pull_request.labels.*.name, 'ci:norun')
     name: CI Machinery Tests
     steps:
       - name: Checkout Repo
