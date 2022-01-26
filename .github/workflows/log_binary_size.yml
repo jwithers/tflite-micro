@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: update logs x86
-      uses: docker://ghcr.io/tflm-bot/tflm-ci:0.1
+      uses: docker://ghcr.io/tflm-bot/tflm-ci:latest
       with:
         args: tensorflow/lite/micro/tools/metrics/create_size_log_x86.sh
     - name: commit logs
@@ -27,7 +27,7 @@ jobs:
       with:
          branch: nightly_binary_size_profiling
          delete-branch: true
-         token: ${{ secrets.TFLM_BOT_REPO_TOKEN }}
+         token: ${{ secrets.GITHUB_TOKEN }}
          title: Automated binary size log update
          commit-message: Automated binary size log update
          committer: TFLM-bot <tflm-github-bot@google.com>
