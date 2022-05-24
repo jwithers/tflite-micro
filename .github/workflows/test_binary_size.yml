@@ -24,15 +24,26 @@ jobs:
       github.event_name == 'schedule'
     steps:
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: prepare files for logging
+      run: |
+        git config --local user.name 'TFLM-bot'
+        git config --local user.email 'tflm-github-bot@google.com'
+        git checkout test -- data/continuous_builds/size_profiling/
     - name: update logs x86
       uses: docker://ghcr.io/tflm-bot/tflm-ci:latest
       with:
         args: tensorflow/lite/micro/tools/metrics/create_size_log_x86.sh
     - name: commit logs
       run: |
-        git config --local user.name 'TFLM-bot'
-        git config --local user.email 'tflm-github-bot@google.com'
-        git commit -am "Automated size log update"
+        git add .
+        git commit -a -m "Automated binary size log update"
+        git checkout test
+        git checkout main -- data/continuous_builds/size_profiling/
+        git add .
+        git commit -a -m "Automated binary size log update" 
+        git push
 #    - name: Create Logs PR Request
 #      id: create-pr
 #      uses: peter-evans/create-pull-request@052fc72b4198ba9fbc81b818c6e1859f747d49a8
