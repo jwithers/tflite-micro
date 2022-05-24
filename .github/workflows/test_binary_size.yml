@@ -35,20 +35,21 @@ jobs:
         path: temp
     - name: prepare files for logging
       run: |
-        cd /main
+        ls -alh
+        cd main
         git branch
-        cp -rf /temp/data/continuous_builds/size_profiling data/continuous_builds/size_profiling
+        cp -rf ../temp/data/continuous_builds/size_profiling data/continuous_builds/size_profiling
     - name: update logs x86
       uses: docker://ghcr.io/tflm-bot/tflm-ci:latest
       with:
         args: tensorflow/lite/micro/tools/metrics/create_size_log_x86.sh
     - name: commit logs
       run: |
-        cd /temp
+        cd ../temp
         git config --local user.name 'TFLM-bot'
         git config --local user.email 'tflm-github-bot@google.com'
         git branch
-        cp -rf /main/data/continuous_builds/size_profiling data/continuous_builds/size_profiling
+        cp -rf ../main/data/continuous_builds/size_profiling data/continuous_builds/size_profiling
         git add .
         git commit -a -m "Automated binary size log update"
         git push
