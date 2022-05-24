@@ -42,9 +42,10 @@ jobs:
     - name: update logs x86
       uses: docker://ghcr.io/tflm-bot/tflm-ci:latest
       with:
-        args: tensorflow/lite/micro/tools/metrics/create_size_log_x86.sh
+        args: main/tensorflow/lite/micro/tools/metrics/create_size_log_x86.sh
     - name: commit logs
       run: |
+        ls -alh
         cd ../temp
         git config --local user.name 'TFLM-bot'
         git config --local user.email 'tflm-github-bot@google.com'
