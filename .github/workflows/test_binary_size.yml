@@ -30,6 +30,7 @@ jobs:
       run: |
         git config --local user.name 'TFLM-bot'
         git config --local user.email 'tflm-github-bot@google.com'
+        git branch
         git checkout temp -- data/continuous_builds/size_profiling/
     - name: update logs x86
       uses: docker://ghcr.io/tflm-bot/tflm-ci:latest
