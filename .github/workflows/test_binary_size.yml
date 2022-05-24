@@ -46,11 +46,12 @@ jobs:
     - name: commit logs
       run: |
         ls -alh
-        cd ../temp
+        cd temp
         git config --local user.name 'TFLM-bot'
         git config --local user.email 'tflm-github-bot@google.com'
         git branch
         cp -rf ../main/data/continuous_builds/size_profiling data/continuous_builds/size_profiling
+        git status
         git add .
         git commit -a -m "Automated binary size log update"
         git push
