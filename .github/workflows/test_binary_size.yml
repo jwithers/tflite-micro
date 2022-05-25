@@ -48,7 +48,8 @@ jobs:
         git config --local user.email 'tflm-github-bot@google.com'
         git add .
         git status
-#        git commit -a -m "Automated binary size log update"
+        git commit -a -m "Automated binary size log update"
+        git push
 
 #    - name: Create Logs PR Request
 #      id: create-pr
