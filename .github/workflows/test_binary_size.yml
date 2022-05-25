@@ -43,7 +43,7 @@ jobs:
     - name: commit logs
       run: |
         git checkout $LOG_BRANCH
-        git checkout main -- data/continuous_builds/size_profiling
+        git checkout main -- data/continuous_builds/size_profiling/
         git config --local user.name 'TFLM-bot'
         git config --local user.email 'tflm-github-bot@google.com'
         git add .
