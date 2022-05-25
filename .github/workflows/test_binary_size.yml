@@ -42,10 +42,11 @@ jobs:
         args: tensorflow/lite/micro/tools/metrics/create_size_log_x86.sh
     - name: commit logs
       run: |
-        git checkout $LOG_BRANCH
-        git checkout main -- data/continuous_builds/size_profiling/
         git config --local user.name 'TFLM-bot'
         git config --local user.email 'tflm-github-bot@google.com'
+        git commit -a -m "Automated binary size log update"
+        git checkout $LOG_BRANCH
+        git checkout main -- data/continuous_builds/size_profiling/
         git add .
         git status
         git commit -a -m "Automated binary size log update"
