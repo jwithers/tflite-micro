@@ -30,7 +30,7 @@ jobs:
             })
        - name: remove ci:ready_to_merge
          uses: actions/github-script@v5
-         if: ${{ (github.event.sender.login == 'mergify[bot]') }}
+         if: ${{ !(github.event.sender.login == 'mergify[bot]') }}
          with:
            github-token: ${{ secrets.TFLM_BOT_REPO_TOKEN }}
            script: |
