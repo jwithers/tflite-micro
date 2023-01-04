@@ -1,0 +1,23 @@
+name: Calling Fail Test
+
+on: workflow_dispatch
+
+jobs:
+  make_it_fail:
+    runs-on: ubuntu-latest
+    name: Return Failure
+    steps:
+      - run: exit 1
+
+  issue-on-error:
+    needs: [make_it_fail]
+    if: ${{ always() && contains(needs.*.result, 'failure') }}
+    uses: ./.github/workflows/issue_on_error.yml
+    with:
+      repo: ${{ github.repository }}
+      workflow: ${{ github.workflow }}
+      run_id: ${{ github.run_id }}
+      run_number: ${{ github.run_number }}
+      flag_label: ci:bot_issue
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
