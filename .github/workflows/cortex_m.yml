@@ -15,14 +15,14 @@ on:
   workflow_dispatch: {}
 
 jobs:
-  cortex_m_generic:
+  cortex_m_bluepill:
     runs-on: ubuntu-latest
 
     if: |
       github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'schedule' && github.repository == 'tensorflow/tflite-micro')
 
-    name: Cortex-M Generic
+    name: Modified Cortex Test bluepill
     steps:
       - uses: actions/setup-python@v4
         with: 
@@ -34,16 +34,18 @@ jobs:
           pip3 install Wave
       - name: Test
         run: |
-          tensorflow/lite/micro/tools/ci_build/test_cortex_m_generic.sh
+          cd ../
+          tflite-micro/tensorflow/lite/micro/tools/ci_build/test_bluepill.sh 
 
-  cortex_m_corstone_300:
+
+  cortex_m_stm32f4:
     runs-on: ubuntu-latest
 
     if: |
       github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'schedule' && github.repository == 'tensorflow/tflite-micro')
 
-    name: Cortex-M Corstone 300 (FVP)
+    name: Modified Cortex Test bluepill
     steps:
       - uses: actions/setup-python@v4
         with: 
@@ -55,10 +57,11 @@ jobs:
           pip3 install Wave
       - name: Test
         run: |
-          tensorflow/lite/micro/tools/ci_build/test_cortex_m_corstone_300.sh
+          cd ../
+          tflite-micro/tensorflow/lite/micro/tools/ci_build/test_stm32f4.sh 
 
   issue-on-error:
-    needs: [cortex_m_generic, cortex_m_corstone_300]
+    needs: [cortex_m_bluepill, cortex_m_stm32f4]
     if: ${{ always() && contains(needs.*.result, 'failure') }}
     uses: ./.github/workflows/issue_on_error.yml
     with:

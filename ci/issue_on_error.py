@@ -9,7 +9,8 @@
 # issue for WORKFLOW exists, makes adds a comment.
 #
 # Requires the environment provide the variables in the block below.
-# TOKEN must have access to update issues.
+# A GITHUB_TOKEN secret must also be provided in the environment 
+# as it is a requirement for the gh cli.
 
 
 from datetime import datetime
