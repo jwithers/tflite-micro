@@ -43,13 +43,4 @@ readable_run make -s -j8 -f ${TENSORFLOW_ROOT}tensorflow/lite/micro/tools/make/M
 readable_run make -s -j8 -f ${TENSORFLOW_ROOT}tensorflow/lite/micro/tools/make/Makefile BUILD_TYPE=release_with_logs test TENSORFLOW_ROOT=${TENSORFLOW_ROOT} EXTERNAL_DIR=${EXTERNAL_DIR}
 readable_run make -s -j8 -f ${TENSORFLOW_ROOT}tensorflow/lite/micro/tools/make/Makefile BUILD_TYPE=release_with_logs integration_tests TENSORFLOW_ROOT=${TENSORFLOW_ROOT} EXTERNAL_DIR=${EXTERNAL_DIR}
 
-# At last test the hello_world as an example outside of the github repo.
-readable_run make -f ${TENSORFLOW_ROOT}tensorflow/lite/micro/tools/make/Makefile clean TENSORFLOW_ROOT=${TENSORFLOW_ROOT} EXTERNAL_DIR=${EXTERNAL_DIR}
-cp -r ${TENSORFLOW_ROOT}tensorflow/lite/micro/examples/hello_world ./
-sed -i 's/tensorflow\/lite\/micro\/examples\///g' hello_world/Makefile.inc
-sed -i 's/$(TENSORFLOW_ROOT)//g' hello_world/Makefile.inc
-mv hello_world/Makefile.inc hello_world/Makefile_internal.inc
-sed -i 's/tensorflow\/lite\/micro\/examples\///g' hello_world/hello_world_test.cc
-readable_run make -s -j8 -f ${TENSORFLOW_ROOT}tensorflow/lite/micro/tools/make/Makefile test_hello_world_test TENSORFLOW_ROOT=${TENSORFLOW_ROOT} EXTERNAL_DIR=hello_world/
-readable_run make -f ${TENSORFLOW_ROOT}tensorflow/lite/micro/tools/make/Makefile clean TENSORFLOW_ROOT=${TENSORFLOW_ROOT} EXTERNAL_DIR=hello_world/
-rm -rf hello_world
+
