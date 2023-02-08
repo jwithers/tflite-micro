@@ -15,7 +15,7 @@ jobs:
 
     name: Hifimini Unit Tests (postmerge)
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           ref: ${{ inputs.trigger-sha }}
       - run: |
@@ -29,17 +29,19 @@ jobs:
     needs: hifimini_unit_tests
     if: ${{ failure() }}
     runs-on: ubuntu-latest
-    
+
     name: Error Handler
-    env:
-      REPO: ${{ github.repository}}
-      WORKFLOW: ${{ github.workflow }}
-      RUN_NUMBER: ${{ github.run_number }}
-      RUN_ID: ${{ github.run_id }}
-      TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      FLAG_LABEL: ci:bot_issue
-      PR_NUMBER: ${{ github.event.number }}
-      PR_LINK: ${{github.event.pull_request._links.html.href}}
-    run: |
-      python3 ci/issue_on_error_post.py
+    steps:
+    - uses: action/checkout@v3
+    - env:
+        REPO: ${{ github.repository}}
+        WORKFLOW: ${{ github.workflow }}
+        RUN_NUMBER: ${{ github.run_number }}
+        RUN_ID: ${{ github.run_id }}
+        TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        FLAG_LABEL: ci:bot_issue
+        PR_NUMBER: ${{ github.event.number }}
+        PR_LINK: ${{github.event.pull_request._links.html.href}}
+    - run: |
+        python3 ci/issue_on_error_post.py
 
