@@ -198,7 +198,7 @@ jobs:
           cd ../
           tflite-micro/tensorflow/lite/micro/tools/ci_build/test_x86_no_release.sh tflite-micro/
 
- x86_3rd_example:
+  x86_3rd_example:
     runs-on: ubuntu-latest
 
     name: Makefile x86 3rd Example (presubmit)
