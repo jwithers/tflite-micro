@@ -33,7 +33,9 @@ jobs:
     name: Error Handler
     steps:
     - uses: action/checkout@v3
-    - env:
+    - run: |
+        python3 ci/issue_on_error_post.py
+      env:
         REPO: ${{ github.repository}}
         WORKFLOW: ${{ github.workflow }}
         RUN_NUMBER: ${{ github.run_number }}
@@ -42,6 +44,3 @@ jobs:
         FLAG_LABEL: ci:bot_issue
         PR_NUMBER: ${{ github.event.number }}
         PR_LINK: ${{github.event.pull_request._links.html.href}}
-    - run: |
-        python3 ci/issue_on_error_post.py
-
