@@ -40,6 +40,46 @@ jobs:
         run: |
           tensorflow/lite/micro/tools/ci_build/test_bazel.sh
 
+  bazel_msan:
+    runs-on: ubuntu-latest
+
+    name: Bazel msan (presubmit)
+    steps:
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.trigger-sha }}
+      - name: Install dependencies
+        run: |
+          sudo ci/install_bazel.sh
+          pip3 install Pillow
+          pip3 install Wave
+      - name: Test
+        run: |
+          tensorflow/lite/micro/tools/ci_build/test_bazel_msan.sh
+
+  bazel_asan:
+    runs-on: ubuntu-latest
+
+    name: Bazel asan (presubmit)
+    steps:
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.trigger-sha }}
+      - name: Install dependencies
+        run: |
+          sudo ci/install_bazel.sh
+          pip3 install Pillow
+          pip3 install Wave
+      - name: Test
+        run: |
+          tensorflow/lite/micro/tools/ci_build/test_asan.sh
+
   cortex_m_bluepill:
     runs-on: ubuntu-latest
 
@@ -116,10 +156,10 @@ jobs:
           cd ../
           tflite-micro/tensorflow/lite/micro/tools/ci_build/test_project_generation.sh tflite-micro/
 
-  x86_tests_one:
+  x86_release:
     runs-on: ubuntu-latest
 
-    name: Makefile x86 One (presubmit)
+    name: Makefile x86 Release (presubmit)
     steps:
       - uses: actions/setup-python@v4
         with:
@@ -135,12 +175,12 @@ jobs:
         run: |
           tensorflow/lite/micro/tools/ci_build/test_makefile.sh
           cd ../
-          tflite-micro/tensorflow/lite/micro/tools/ci_build/test_x86_subset_1.sh tflite-micro/
+          tflite-micro/tensorflow/lite/micro/tools/ci_build/test_x86_release.sh tflite-micro/
 
-  x86_tests_two:
+  x86_no_release:
     runs-on: ubuntu-latest
 
-    name: Makefile x86 Two (presubmit)
+    name: Makefile x86 No Release (presubmit)
     steps:
       - uses: actions/setup-python@v4
         with:
@@ -156,4 +196,26 @@ jobs:
         run: |
           tensorflow/lite/micro/tools/ci_build/test_makefile.sh
           cd ../
-          tflite-micro/tensorflow/lite/micro/tools/ci_build/test_x86_subset_2.sh tflite-micro/
+          tflite-micro/tensorflow/lite/micro/tools/ci_build/test_x86_no_release.sh tflite-micro/
+
+ x86_3rd_example:
+    runs-on: ubuntu-latest
+
+    name: Makefile x86 3rd Example (presubmit)
+    steps:
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.trigger-sha }}
+      - name: Install dependencies
+        run: |
+          pip3 install Pillow
+          pip3 install Wave
+      - name: Test
+        run: |
+          tensorflow/lite/micro/tools/ci_build/test_makefile.sh
+          cd ../
+          tflite-micro/tensorflow/lite/micro/tools/ci_build/test_x86_3rd_example.sh tflite-micro/
+ 
