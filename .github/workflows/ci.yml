@@ -78,7 +78,7 @@ jobs:
           pip3 install Wave
       - name: Test
         run: |
-          tensorflow/lite/micro/tools/ci_build/test_asan.sh
+          tensorflow/lite/micro/tools/ci_build/test_bazel_asan.sh
 
   cortex_m_bluepill:
     runs-on: ubuntu-latest
