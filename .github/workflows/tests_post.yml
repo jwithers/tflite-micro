@@ -28,6 +28,8 @@ jobs:
   issue_on_error:
     needs: hifimini_unit_tests
     if: ${{ failure() }}
+    runs-on: ubuntu-latest
+    
     name: Error Handler
     env:
       REPO: ${{ github.repository}}
