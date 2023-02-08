@@ -32,7 +32,7 @@ jobs:
 
     name: Error Handler
     steps:
-    - uses: action/checkout@v3
+    - uses: actions/checkout@v3
     - run: |
         python3 ci/issue_on_error_post.py
       env:
