@@ -40,7 +40,7 @@ jobs:
         WORKFLOW: ${{ github.workflow }}
         RUN_NUMBER: ${{ github.run_number }}
         RUN_ID: ${{ github.run_id }}
-        TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         FLAG_LABEL: ci:bot_issue
         PR_NUMBER: ${{ github.event.number }}
         PR_LINK: ${{github.event.pull_request._links.html.href}}
