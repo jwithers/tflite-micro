@@ -32,4 +32,3 @@ CC=clang readable_run bazel test tensorflow/lite/micro/... \
   --config=asan \
   --test_tag_filters=-no_oss,-noasan --build_tag_filters=-no_oss,-noasan \
   --test_output=errors
-

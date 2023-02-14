@@ -80,10 +80,10 @@ jobs:
         run: |
           tensorflow/lite/micro/tools/ci_build/test_bazel_asan.sh
 
-  cortex_m_bluepill:
+  cortex_m_bluepill_release:
     runs-on: ubuntu-latest
 
-    name: Cortex-M Bluepill (presubmit)
+    name: Cortex-M Bluepill Release (presubmit)
     steps:
       - uses: actions/setup-python@v4
         with:
@@ -98,12 +98,12 @@ jobs:
       - name: Test
         run: |
           cd ../
-          tflite-micro/tensorflow/lite/micro/tools/ci_build/test_bluepill.sh tflite-micro/
+          tflite-micro/tensorflow/lite/micro/tools/ci_build/test_bluepill_release.sh tflite-micro/
 
-  cortex_m_stm32f4:
+  cortex_m_bluepill_no_release:
     runs-on: ubuntu-latest
 
-    name: Cortex-M stm32f4 (presubmit)
+    name: Cortex-M Bluepill No Release (presubmit)
     steps:
       - uses: actions/setup-python@v4
         with:
@@ -118,7 +118,47 @@ jobs:
       - name: Test
         run: |
           cd ../
-          tflite-micro/tensorflow/lite/micro/tools/ci_build/test_stm32f4.sh tflite-micro/
+          tflite-micro/tensorflow/lite/micro/tools/ci_build/test_bluepill_no_release.sh tflite-micro/
+
+  cortex_m_stm32f4_release:
+    runs-on: ubuntu-latest
+
+    name: Cortex-M stm32f4 Release (presubmit)
+    steps:
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.trigger-sha }}
+      - name: Install dependencies
+        run: |
+          pip3 install Pillow
+          pip3 install Wave
+      - name: Test
+        run: |
+          cd ../
+          tflite-micro/tensorflow/lite/micro/tools/ci_build/test_stm32f4_release.sh tflite-micro/
+
+  cortex_m_stm32f4_no_release:
+    runs-on: ubuntu-latest
+
+    name: Cortex-M stm32f4 No Release (presubmit)
+    steps:
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.trigger-sha }}
+      - name: Install dependencies
+        run: |
+          pip3 install Pillow
+          pip3 install Wave
+      - name: Test
+        run: |
+          cd ../
+          tflite-micro/tensorflow/lite/micro/tools/ci_build/test_stm32f4_no_release.sh tflite-micro/
 
   check_code_style:
     runs-on: ubuntu-latest
@@ -217,5 +257,5 @@ jobs:
         run: |
           tensorflow/lite/micro/tools/ci_build/test_makefile.sh
           cd ../
-          tflite-micro/tensorflow/lite/micro/tools/ci_build/test_x86_3rd_example.sh tflite-micro/
+          tflite-micro/tensorflow/lite/micro/tools/ci_build/test_x86_example.sh tflite-micro/
  
