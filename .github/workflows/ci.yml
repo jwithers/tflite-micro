@@ -241,7 +241,7 @@ jobs:
   x86_3rd_example:
     runs-on: ubuntu-latest
 
-    name: Makefile x86 3rd Example (presubmit)
+    name: Makefile x86 Example (presubmit)
     steps:
       - uses: actions/setup-python@v4
         with:
