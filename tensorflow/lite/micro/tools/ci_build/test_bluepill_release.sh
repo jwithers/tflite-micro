@@ -36,8 +36,3 @@ readable_run make -f ${TENSORFLOW_ROOT}tensorflow/lite/micro/tools/make/Makefile
 # check that the release build is ok.
 readable_run make -f ${TENSORFLOW_ROOT}tensorflow/lite/micro/tools/make/Makefile clean TENSORFLOW_ROOT=${TENSORFLOW_ROOT} EXTERNAL_DIR=${EXTERNAL_DIR}
 readable_run make -j8 -f ${TENSORFLOW_ROOT}tensorflow/lite/micro/tools/make/Makefile TARGET=${TARGET} BUILD_TYPE=release build TENSORFLOW_ROOT=${TENSORFLOW_ROOT} EXTERNAL_DIR=${EXTERNAL_DIR}
-
-# We use Renode differently when running the full test suite (make test) vs an
-# individual test. So, we test only of the kernels individually as well to have
-# both of the Renode variations be part of the CI.
-readable_run make -j8 -f ${TENSORFLOW_ROOT}tensorflow/lite/micro/tools/make/Makefile TARGET=${TARGET} test_kernel_add_test TENSORFLOW_ROOT=${TENSORFLOW_ROOT} EXTERNAL_DIR=${EXTERNAL_DIR}

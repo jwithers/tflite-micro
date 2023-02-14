@@ -34,9 +34,9 @@ readable_run make -f ${TENSORFLOW_ROOT}tensorflow/lite/micro/tools/make/Makefile
 # TODO(b/143715361): downloading first to allow for parallel builds.
 readable_run make -f ${TENSORFLOW_ROOT}tensorflow/lite/micro/tools/make/Makefile third_party_downloads TENSORFLOW_ROOT=${TENSORFLOW_ROOT} EXTERNAL_DIR=${EXTERNAL_DIR}
 
-# Build w/o release so that we can run the tests and get additional
-# debugging info on failures.
+# Build w/o TF_LITE_STATIC_MEMORY to catch additional errors.
+# TODO(b/160955687): We run the tests w/o TF_LITE_STATIC_MEMORY to make the
+# internal and open source CI consistent. See b/160955687#comment7 for more
+# details.
 readable_run make -f ${TENSORFLOW_ROOT}tensorflow/lite/micro/tools/make/Makefile clean TENSORFLOW_ROOT=${TENSORFLOW_ROOT} EXTERNAL_DIR=${EXTERNAL_DIR}
-readable_run make -s -j8 -f ${TENSORFLOW_ROOT}tensorflow/lite/micro/tools/make/Makefile build TENSORFLOW_ROOT=${TENSORFLOW_ROOT} EXTERNAL_DIR=${EXTERNAL_DIR}
-readable_run make -s -j8 -f ${TENSORFLOW_ROOT}tensorflow/lite/micro/tools/make/Makefile test TENSORFLOW_ROOT=${TENSORFLOW_ROOT} EXTERNAL_DIR=${EXTERNAL_DIR}
-readable_run make -s -j8 -f ${TENSORFLOW_ROOT}tensorflow/lite/micro/tools/make/Makefile integration_tests TENSORFLOW_ROOT=${TENSORFLOW_ROOT} EXTERNAL_DIR=${EXTERNAL_DIR}
+readable_run make -j8 -f ${TENSORFLOW_ROOT}tensorflow/lite/micro/tools/make/Makefile BUILD_TYPE=no_tf_lite_static_memory test TENSORFLOW_ROOT=${TENSORFLOW_ROOT} EXTERNAL_DIR=${EXTERNAL_DIR}

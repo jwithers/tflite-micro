@@ -120,6 +120,26 @@ jobs:
           cd ../
           tflite-micro/tensorflow/lite/micro/tools/ci_build/test_bluepill_no_release.sh tflite-micro/
 
+  cortex_m_bluepill_renode:
+    runs-on: ubuntu-latest
+
+    name: Cortex-M Bluepill Renode (presubmit)
+    steps:
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.trigger-sha }}
+      - name: Install dependencies
+        run: |
+          pip3 install Pillow
+          pip3 install Wave
+      - name: Test
+        run: |
+          cd ../
+          tflite-micro/tensorflow/lite/micro/tools/ci_build/test_bluepill_renode.sh tflite-micro/
+
   cortex_m_stm32f4_release:
     runs-on: ubuntu-latest
 
@@ -238,7 +258,7 @@ jobs:
           cd ../
           tflite-micro/tensorflow/lite/micro/tools/ci_build/test_x86_no_release.sh tflite-micro/
 
-  x86_3rd_example:
+  x86_example:
     runs-on: ubuntu-latest
 
     name: Makefile x86 Example (presubmit)
@@ -259,3 +279,23 @@ jobs:
           cd ../
           tflite-micro/tensorflow/lite/micro/tools/ci_build/test_x86_example.sh tflite-micro/
  
+  x86_no_static:
+    runs-on: ubuntu-latest
+
+    name: Makefile x86 No Static (presubmit)
+    steps:
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.trigger-sha }}
+      - name: Install dependencies
+        run: |
+          pip3 install Pillow
+          pip3 install Wave
+      - name: Test
+        run: |
+          tensorflow/lite/micro/tools/ci_build/test_makefile.sh
+          cd ../
+          tflite-micro/tensorflow/lite/micro/tools/ci_build/test_x86_no_static.sh tflite-micro/
