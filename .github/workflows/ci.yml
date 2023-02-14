@@ -40,6 +40,26 @@ jobs:
         run: |
           tensorflow/lite/micro/tools/ci_build/test_bazel.sh
 
+  bazel_tests_nooss:
+    runs-on: ubuntu-latest
+
+    name: Bazel nooss (presubmit)
+    steps:
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.trigger-sha }}
+      - name: Install dependencies
+        run: |
+          sudo ci/install_bazel.sh
+          pip3 install Pillow
+          pip3 install Wave
+      - name: Test
+        run: |
+          tensorflow/lite/micro/tools/ci_build/test_bazel_nooss.sh
+
   bazel_msan:
     runs-on: ubuntu-latest
 
