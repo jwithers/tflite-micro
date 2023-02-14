@@ -28,7 +28,12 @@ on:
 jobs:
   f1_unit_tests:
     runs-on: ubuntu-latest
-
+    # runs only scheduled or dispatched but is also run by ci in
+    # tests_post.yml after pr merge.
+    if: |
+      inputs.is-scheduled == 'TRUE' ||
+      inputs.is-dispatched == 'TRUE'
+      
     name: Fusion F1 Unit Tests (presubmit)
     steps:
       - uses: actions/checkout@v2
