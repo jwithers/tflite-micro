@@ -26,8 +26,8 @@ FLAG_LABEL = os.environ['FLAG_LABEL']
 RUN_NUMBER = os.environ['RUN_NUMBER']
 RUN_ID = os.environ['RUN_ID']
 # optional variables
-PR_NUMBER = os.getenv['PR_NUMBER']
-PR_LINK = os.getenv['PR_LINK']
+PR_NUMBER = os.getenv('PR_NUMBER')
+PR_LINK = os.getenv('PR_LINK')
 
 def get_tagged_issues(flag_label, workflow):
     issues = subprocess.check_output(["gh", "issue", "list",

@@ -42,20 +42,16 @@ jobs:
 
   issue_on_error:
     needs: [hifimini_unit_tests, f1_unit_tests]
-    if: ${{ failure() }}
-    runs-on: ubuntu-latest
-
-    name: Error Handler
-    steps:
-    - uses: actions/checkout@v3
-    - run: |
-        python3 ci/issue_on_error.py
-      env:
-        REPO: ${{ github.repository}}
-        WORKFLOW: ${{ github.workflow }}
-        RUN_NUMBER: ${{ github.run_number }}
-        RUN_ID: ${{ github.run_id }}
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        FLAG_LABEL: ci:bot_issue
-        PR_NUMBER: ${{ github.event.number }}
-        PR_LINK: ${{github.event.pull_request._links.html.href}}
+    if: ${{ always() && contains(needs.*.result, 'failure') }}
+    uses: ./.github/workflows/issue_on_error.yml
+    with:
+      repo: ${{ github.repository}}
+      workflow: ${{ github.workflow }}
+      run_number: ${{ github.run_number }}
+      run_id: ${{ github.run_id }}
+      flag_label: ci:bot_issue
+      pr_number: ${{ github.event.number }}
+      pr_link: ${{ github.event.pull_request._links.html.href }}
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
+      
